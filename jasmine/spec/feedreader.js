@@ -66,9 +66,9 @@ $(function() {
         it('ensures that the menu changes visibility', function() {
             var menuLink = $('.menu-icon-link');
             $(menuLink).click();
-            expect(body.hasClass('menu-hidden')).not.toBe(true);
+            expect(body.hasClass('menu-hidden')).toBeFalsy();
             $(menuLink).click();
-            expect(body.hasClass('menu-hidden')).toBe(true);
+            expect(body.hasClass('menu-hidden')).toBeTruthy();
         });
     });
 
@@ -87,8 +87,7 @@ $(function() {
          * a single .entry element within the .feed container.
          */
         it('ensures that there is at least a sigle .entry element', function(done) {
-            expect($('.feed').length).toBeGreaterThan(0);
-            expect($('.entry').length).toBeGreaterThan(0);
+            expect($('.feed .entry').length).toBeGreaterThan(0);
             done();
         });
 
@@ -101,12 +100,23 @@ $(function() {
 
         var previousContent;
 
+        //wait for async calls to finish
         beforeEach(function(done) {
-            previousContent = $('.feed').html();
+            //load second content
             loadFeed(1, function() {
-                done();
+                previousContent = $('.feed').html();
+                //load third content
+                loadFeed(2, function() {
+                    done();
+                });
             });
         });
+
+        //load first feed after each test
+        afterEach(function() {
+            loadFeed(0);
+        });
+
 
         /* Ensures when a new feed is loaded by the loadFeed
          *function that the content actually changes.
