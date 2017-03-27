@@ -27,17 +27,17 @@ $(function() {
         });
 
         //Test for url difined and not empty
-        veryfiyArrayFieldDefinedNotEmpty(allFeeds, 'url');
+        verifyArrayFieldDefinedNotEmpty(allFeeds, 'url');
 
         //Test for name difined and not empty
-        veryfiyArrayFieldDefinedNotEmpty(allFeeds, 'name');
+        verifyArrayFieldDefinedNotEmpty(allFeeds, 'name');
 
         /*
          * This function gets an array and a field as
          * a parameter and checks if each entry of the array
          * has that field difined and not empty
          */
-        function veryfiyArrayFieldDefinedNotEmpty(array, field) {
+        function verifyArrayFieldDefinedNotEmpty(array, field) {
             it('has every ' + field + ' defined and not empty', function() {
                 for (var i = 0; i < array.length; i++) {
                     expect(allFeeds[i][field]).toBeDefined();
@@ -86,9 +86,8 @@ $(function() {
          * and completes its work, there is at least
          * a single .entry element within the .feed container.
          */
-        it('ensures that there is at least a sigle .entry element', function(done) {
+        it('ensures that there is at least a sigle .entry element', function() {
             expect($('.feed .entry').length).toBeGreaterThan(0);
-            done();
         });
 
     });
@@ -121,11 +120,10 @@ $(function() {
         /* Ensures when a new feed is loaded by the loadFeed
          *function that the content actually changes.
          */
-        it('ensures the content changes', function(done) {
+        it('ensures the content changes', function() {
             var newContent = $('.feed').html();
             //Check if contnet are different
             expect(previousContent).not.toBe(newContent);
-            done();
         });
 
     });
